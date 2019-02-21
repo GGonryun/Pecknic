@@ -1,64 +1,69 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class PerlinNoise
+{
+    private float[] noise;
+    private int xSize, zSize;
+
+    public PerlinNoise(int xSize, int zSize, int density)
+    {
+        noise = new float[(xSize + 1) * (zSize + 1)];
+        this.xSize = xSize;
+        this.zSize = zSize;
+
+        for (int z = 0, i = 0; z <= zSize; z++)
+        {
+            for (int x = 0; x <= xSize; x++, i++)
+            {
+                float xCoord = (float)x / xSize * density;
+                float zCoord = (float)z / zSize * density;
+                noise[i] = Mathf.PerlinNoise(xCoord, zCoord);
+                Debug.Log($"({xCoord},{zCoord}): {noise[i]}.");
+            }
+        }
+    }
+
+    public float this[int i, int j]
+    {
+        get
+        {
+            if( i > xSize)
+            {
+                return -1;
+            }
+            if( j > zSize)
+            {
+                return -1;
+            }
+
+            int row = (xSize + 1) * j;
+            return noise[i + row];
+        }
+    }
+}
+
 public class TerrainGenerator : MonoBehaviour
 {
-    [SerializeField] private int xSize;
-    [SerializeField] private int zSize;
+    [SerializeField] private int xSize = 5;
+    [SerializeField] private int zSize = 5;
+    [SerializeField] private int density = 5;
+    [SerializeField] private int scale = 5;
     private MeshFilter meshFilter;
     private MeshRenderer meshRenderer;
+    private PerlinNoise noise;
+    public Material testMat;
 
-    protected virtual void Awake()
+    void Awake()
     {
         meshFilter = gameObject.AddComponent<MeshFilter>();
         meshRenderer = gameObject.AddComponent<MeshRenderer>();
-        meshFilter.mesh = GenerateMesh();
     }
 
-    private Mesh GenerateMesh()
+    void Start()
     {
-        int totalVertices = (xSize + 1) * (zSize + 1);
-        Mesh mesh = new Mesh();
-        Vector2[] uv = new Vector2[totalVertices];
-        Vector3[] vertices = new Vector3[totalVertices];
-        Vector4[] tangents = new Vector4[totalVertices];
-        Vector4 tangent = new Vector4(1, 0, 0, -1);
-        for (int i = 0, z = 0; z <= xSize; z++)
-        {
-            for (int x = 0; x <= zSize; x++, i++)
-            {
-                int y = 0;
-                vertices[i] = new Vector3(x, y, z);
-
-                uv[i] = new Vector2((float)x / xSize, (float)z / zSize);
-
-                tangents[i] = tangent;
-            }
-        }
-        mesh.vertices = vertices;
-        mesh.uv = uv;
-        mesh.tangents = tangents;
-        mesh.triangles = GenerateTriangles(totalVertices);
-        mesh.RecalculateNormals();
-        return mesh;
-    }
-
-    private int[] GenerateTriangles(int totalVertices)
-    {
-        int[] triangles = new int[totalVertices * 6];
-        int nextRow = xSize;
-        for (int t = 0, v = 0, y = 0; y < zSize; y++, v++)
-        {
-            for (int x = 0; x < xSize; t += 6, v++, x++)
-            {
-                triangles[t] = v;
-                triangles[t + 2] = triangles[t + 3] = v + 1;
-                triangles[t + 1] = triangles[t + 4] = v + nextRow + 1;
-                triangles[t + 5] = v + nextRow + 2;
-            }
-        }
-        return triangles;
+        meshFilter.mesh = MeshGenerator.GenerateMesh(xSize, zSize, scale, new PerlinNoise(xSize, zSize, density));
+        meshRenderer.material = testMat;
     }
 }
