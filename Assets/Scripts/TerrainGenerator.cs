@@ -31,4 +31,6 @@ public class TerrainGenerator : MonoBehaviour
         meshRenderer.material = testMat;
         meshCollider = gameObject.AddComponent<MeshCollider>();
     }
+
+
 }

@@ -2,6 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public struct VectorRange
+{
+    public int min, max;
+    public static VectorRange zero
+    {
+        get => new VectorRange(0, 0);
+    }
+    public VectorRange(int min, int max)
+    {
+        this.min = min;
+        this.max = max;
+    }
+}
+
 public class Player : MonoBehaviour
 {
     public float speed = 6.0f;
@@ -12,31 +27,31 @@ public class Player : MonoBehaviour
     private float rotationDirection = 0f;
     public CharacterController controller;
 
+    public Vector2 sensitivity = Vector2.zero;
+    public VectorRange verticalRange = VectorRange.zero;
+
+    float rotationY = 0F;
+
     void Update()
     {
         if (controller.isGrounded)
         {
-            // We are grounded, so recalculate
-            // move direction directly from axes
-            moveDirection = new Vector3(0.0f, 0.0f, Input.GetAxis("Vertical"));
-
+            moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
             moveDirection = transform.TransformDirection(moveDirection);
             moveDirection = moveDirection * speed;
-           
-
             if (Input.GetButton("Jump"))
             {
                 moveDirection.y = jumpSpeed;
             }
         }
 
-        // Apply gravity
         moveDirection.y = moveDirection.y - (gravity * Time.deltaTime);
-        
-        // rotate the player
-        rotationDirection = Input.GetAxis("Horizontal");
-        transform.Rotate(Vector3.up * rotationDirection);
-        
+
+        float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivity.x;
+        rotationY += Input.GetAxis("Mouse Y") * sensitivity.y;
+        rotationY = Mathf.Clamp(rotationY, verticalRange.min, verticalRange.max);
+        transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
+
         // Move the controller
         controller.Move(moveDirection * Time.deltaTime);
     }

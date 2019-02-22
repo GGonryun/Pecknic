@@ -31,10 +31,11 @@ public class EnvironmentGenerator : MonoBehaviour
                 {
                     grow -= growthRate;
                     GameObject obj = factory.Get();
-                    obj.transform.position = new Vector3(x, (heightMap[x, z] * scale)-.5f, z);
+                    obj.transform.localPosition = new Vector3(x, (heightMap[x, z] * scale * .90f), z);
                     environment.Add(obj);
                 }
             }
         }
     }
+
 }
