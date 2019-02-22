@@ -17,15 +17,13 @@ public static class MeshGenerator
         {
             for (int x = 0; x <= zSize; x++, i++)
             {
-                float y;
+                float y = 0;
                 if (x == 0 || z == 0 || x == xSize || z == zSize) 
                 {
-                    y = 10f;
+                    y = 15f;
                 }
-                else
-                {
-                    y = heightMap[x,z] * scale;
-                }
+                y += heightMap[x,z] * scale;
+                
                 vertices[i] = new Vector3(x, y, z);
 
                 uv[i] = new Vector2((float)x / xSize, (float)z / zSize);
