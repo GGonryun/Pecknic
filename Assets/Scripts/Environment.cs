@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Environment : IDespawnable
+public class Environment : MonoBehaviour, IDespawnable
 {
 
     public EnvironmentSpawner spawner;
