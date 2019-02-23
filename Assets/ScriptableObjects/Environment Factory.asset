@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4d870a126895434ab0902c267d0a141, type: 3}
-  m_Name: EnvironmentFactory
+  m_Name: Environment Factory
   m_EditorClassIdentifier: 
   environmentObjects:
   - {fileID: 3166152236406523520, guid: 07e7e4c1c2afa4e49af7b7f1712ffbed, type: 3}

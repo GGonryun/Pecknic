@@ -12,6 +12,9 @@ public class Seagull : MonoBehaviour, IDespawnable
     private float cooldown;
     private SeagullSpawner spawner;
 
+    private string home = "Home";
+    private string food = "Picnic";
+
     public void Spawn(SeagullSpawner spawner, float speed, float cooldown)
     {
         AssignTarget("Home");
@@ -61,10 +64,10 @@ public class Seagull : MonoBehaviour, IDespawnable
     private IEnumerator ChangeDirectionDelay(OnCollisionEventArgs e)
     {
         target = null;
-        if (e.Collider.gameObject.CompareTag("Home"))
+        if (e.Collider.gameObject.CompareTag(home))
         {
             yield return new WaitForSeconds(cooldown);
-            AssignTarget("Picnic");
+            AssignTarget(food);
             if(hasBread)
             {
                 hasBread = false;
@@ -72,10 +75,10 @@ public class Seagull : MonoBehaviour, IDespawnable
             }
 
         }
-        else if (e.Collider.gameObject.CompareTag("Picnic"))
+        else if (e.Collider.gameObject.CompareTag(food))
         {
             yield return new WaitForSeconds(cooldown);
-            AssignTarget("Home");
+            AssignTarget(home);
             hasBread = true;
 
         }

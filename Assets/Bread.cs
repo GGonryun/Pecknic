@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bread : MonoBehaviour
+public class Bread : MonoBehaviour, IDespawnable
 {
-    // Start is called before the first frame update
-    void Start()
+
+    private BreadSpawner spawner;
+
+    public void Spawn(BreadSpawner spawner)
     {
-        
+        this.spawner = spawner;
     }
 
-    // Update is called once per frame
-    void Update()
+    void IDespawnable.Despawn()
     {
-        
+        spawner.Despawn(this);
     }
 }

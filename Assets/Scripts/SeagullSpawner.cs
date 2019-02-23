@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SeagullSpawner : EnemySpawner<Seagull>
+public class SeagullSpawner : Spawner<Seagull>
 {
     public SeagullFactory factory;
     private bool ready = false;

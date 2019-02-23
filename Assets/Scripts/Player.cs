@@ -29,13 +29,13 @@ public class Player : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    private void OnEnable()
+    void OnEnable()
     {
         leftArm.Collided += Destroy;
         rightArm.Collided += Destroy;
     }
 
-    private void OnDisable()
+    void OnDisable()
     {
         leftArm.Collided -= Destroy;
         rightArm.Collided -= Destroy;
@@ -45,7 +45,6 @@ public class Player : MonoBehaviour
     {
         Movement();
         Punching();
-        
     }
 
     void Punching()

@@ -18,14 +18,16 @@ public class TerrainGenerator : MonoBehaviour
         environment = gameObject.GetComponent<EnvironmentGenerator>();
     }
 
-    public void Initialize(int xSize, int zSize, int density, int scale)
+    public PerlinNoise Initialize(int size, int density, int scale)
     {
-        PerlinNoise heightMap = new PerlinNoise(xSize, zSize, density);
-        PerlinNoise environmentMap = new PerlinNoise(xSize, zSize, 10);
-        meshFilter.mesh = MeshGenerator.GenerateMesh(xSize, zSize, scale, heightMap);
-        environment.Initialize(xSize, zSize, scale, heightMap, environmentMap);
+        PerlinNoise heightMap = new PerlinNoise(size, size, density);
+        PerlinNoise environmentMap = new PerlinNoise(size, size, 10);
+        meshFilter.mesh = MeshGenerator.GenerateMesh(size, size, scale, heightMap);
+        environment.Initialize(size, size, scale, heightMap, environmentMap);
         meshRenderer.material = testMat;
         meshCollider = gameObject.AddComponent<MeshCollider>();
+
+        return heightMap;
     }
 
 
