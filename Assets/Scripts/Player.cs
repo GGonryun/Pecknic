@@ -27,12 +27,35 @@ public class Player : MonoBehaviour
     private float rotationDirection = 0f;
     public CharacterController controller;
 
+    public ArmMotor leftArm;
+    public ArmMotor rightArm;
+
     public Vector2 sensitivity = Vector2.zero;
     public VectorRange verticalRange = VectorRange.zero;
 
     float rotationY = 0F;
 
     void Update()
+    {
+        Movement();
+        Punching();
+    }
+
+    private void Punching()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            Debug.Log("A: Left Punch Attempted");
+            leftArm.Punch();
+        }
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            Debug.Log("A: Right Punch Attempted");  
+            rightArm.Punch();
+        }
+    }
+
+    private void Movement()
     {
         if (controller.isGrounded)
         {
@@ -44,7 +67,6 @@ public class Player : MonoBehaviour
                 moveDirection.y = jumpSpeed;
             }
         }
-
         moveDirection.y = moveDirection.y - (gravity * Time.deltaTime);
 
         float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivity.x;
