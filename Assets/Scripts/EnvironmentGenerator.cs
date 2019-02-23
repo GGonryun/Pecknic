@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnvironmentGenerator : MonoBehaviour
 {
-    [SerializeField] EnvironmentFactory factory;
+    [SerializeField] private EnvironmentFactory factory;
     [Range(50, 200)] [SerializeField] private float growthRate = 100;
     [Range(0, .499f)] [SerializeField] private float offset = 0.05f;
 

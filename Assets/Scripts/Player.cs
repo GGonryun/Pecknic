@@ -1,21 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-[System.Serializable]
-public struct VectorRange
-{
-    public int min, max;
-    public static VectorRange zero
-    {
-        get => new VectorRange(0, 0);
-    }
-    public VectorRange(int min, int max)
-    {
-        this.min = min;
-        this.max = max;
-    }
-}
+﻿using UnityEngine;
 
 public class Player : MonoBehaviour
 {

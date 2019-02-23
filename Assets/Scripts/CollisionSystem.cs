@@ -16,17 +16,17 @@ public class OnCollisionEventArgs : EventArgs
 
 public class CollisionSystem : MonoBehaviour
 {
+
+    public string[] enemies;
     private OnCollisionEventHandler collided;
     public event OnCollisionEventHandler Collided {
         add {
-            Debug.Log("New Event");
             collided += value;
         }
         remove {
             collided -= value;
         }
     }
-
 
     private void OnCollided(OnCollisionEventArgs e)
     {
@@ -35,6 +35,22 @@ public class CollisionSystem : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        OnCollided(new OnCollisionEventArgs(collision));
+        if(CollidedWithEnemies(collision))
+        {
+            OnCollided(new OnCollisionEventArgs(collision));
+        }
+    }
+
+    private bool CollidedWithEnemies(Collision collision)
+    {
+
+        foreach (string enemy in enemies)
+        {
+            if(collision.gameObject.CompareTag(enemy))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
