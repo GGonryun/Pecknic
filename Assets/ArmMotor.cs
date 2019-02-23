@@ -76,7 +76,12 @@ public class ArmMotor : MonoBehaviour
     void Awake()
     {
         initialPos = transform.localPosition;
+        collisionSystem.Collided += WarnMe;
+    }
 
+    public void WarnMe(object sender, OnCollisionEventArgs e)
+    {
+        contact = true;
     }
 
     public void Punch()
@@ -107,7 +112,6 @@ public class ArmMotor : MonoBehaviour
         yield return ArmAction(startingPos, newPos, travelDuration, easeFunctionSelection);
         dangerous = false;
 
-        //Backwards action
         yield return ArmAction(newPos, startingPos, travelDuration, easeFunctionSelection);
         transform.localPosition = startingPos;
 
@@ -119,7 +123,7 @@ public class ArmMotor : MonoBehaviour
     {
         //Begin Arm Movement
         float elapsedTime = -0.1f;
-        while (elapsedTime <= maxDuration)
+        while (elapsedTime <= maxDuration || !contact)
         {
             float ratio = elapsedTime / maxDuration;
             float easedRatio = EaseFunction.Calculate(easeFunctionSelection, ratio);
@@ -128,8 +132,7 @@ public class ArmMotor : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
-
-
+        
     }
 
 
