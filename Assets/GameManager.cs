@@ -7,8 +7,6 @@ public class GameManager : Singleton<GameManager>
 {
     public TerrainGenerator terrainTemplate;
 
-    public TerrainGenerator terrain;
-
     public Player player;
     public SeagullSpawner seagullSpawner;
     public BreadSpawner breadSpawner;
@@ -23,15 +21,41 @@ public class GameManager : Singleton<GameManager>
 
     private List<IDespawnable> seagulls;
     private List<IDespawnable> breads;
+    private TerrainGenerator terrain;
 
-
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            Initialize();
+        }
+        else if (Input.GetKeyDown(KeyCode.O))
+        {
+            StartGame();
+        }
+        else if (Input.GetKeyDown(KeyCode.P))
+        {
+            EndGame();
+        }
+    }
 
     void Initialize()
     {
+        DontDestroyOnLoad(this);
+
         breads = new List<IDespawnable>();
         seagulls = new List<IDespawnable>();
 
+        player = Instantiate(player) as Player;
+        DontDestroyOnLoad(player);
+
         breadSpawner = Instantiate(breadSpawner) as BreadSpawner;
+        DontDestroyOnLoad(breadSpawner);
+        breadSpawner.Initialize(new VectorRange(1, mapSize - 1), mapScale);
+
+        seagullSpawner = Instantiate(seagullSpawner) as SeagullSpawner;
+        seagullSpawner.Initialize(seagullSpeedRange, seagullFeedingSpeedRange);
+        DontDestroyOnLoad(seagullSpawner);
 
         StartGame();
     }
@@ -41,35 +65,40 @@ public class GameManager : Singleton<GameManager>
     {
         terrain = Instantiate(terrainTemplate) as TerrainGenerator;
         PerlinNoise heightMap = terrain.Initialize(mapSize, mapDensity, mapScale);
-
-        player = Instantiate(player) as Player;
+        
         Vector3 randomLocation = new Vector3(Random.Range(mapSize * .10f, mapSize * .90f), Random.Range(mapScale, mapScale * 2f), Random.Range(mapSize * .1f, mapSize * .9f));
         player.Spawn(randomLocation);
 
-        
-        breadSpawner.Initialize(new VectorRange(1, mapSize - 1), mapScale, heightMap);
+        breadSpawner.RefreshMap(heightMap);
         SpawnBread();
 
-        seagullSpawner = Instantiate(seagullSpawner) as SeagullSpawner;
-        seagullSpawner.Initialize(seagullSpeedRange, seagullFeedingSpeedRange);
         StartCoroutine(SpawnSeagulls());
     }
 
     void EndGame()
     {
+        Disable(player);
+
         StopAllCoroutines();
-        DisableAll(breads);
         DisableAll(seagulls);
-        Destroy(terrainTemplate.gameObject);
-        Destroy(player.gameObject);
+
+        DisableAll(breads);
+
+        Disable(terrain);
+        Destroy(terrain);
     }
 
     private void DisableAll(List<IDespawnable> list)
     {
         foreach(IDespawnable item in list)
         {
-            item.Despawn();
+            Disable(item);
         }
+    }
+
+    private void Disable(IDespawnable item)
+    {
+        item.Despawn();
     }
 
     private void SpawnBread()

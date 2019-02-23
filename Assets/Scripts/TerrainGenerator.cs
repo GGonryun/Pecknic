@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-public class TerrainGenerator : MonoBehaviour
+public class TerrainGenerator : MonoBehaviour, IDespawnable
 {
    
     private EnvironmentGenerator environment;
@@ -8,6 +9,8 @@ public class TerrainGenerator : MonoBehaviour
     private MeshRenderer meshRenderer;
     private MeshCollider meshCollider;
     private PerlinNoise noise;
+    private List<GameObject> environmentObjects;
+
 
     public Material testMat;
 
@@ -21,14 +24,20 @@ public class TerrainGenerator : MonoBehaviour
     public PerlinNoise Initialize(int size, int density, int scale)
     {
         PerlinNoise heightMap = new PerlinNoise(size, size, density);
-        PerlinNoise environmentMap = new PerlinNoise(size, size, 10);
+        PerlinNoise environmentMap = new PerlinNoise(size, size, Random.Range(0,20));
         meshFilter.mesh = MeshGenerator.GenerateMesh(size, size, scale, heightMap);
-        environment.Initialize(size, size, scale, heightMap, environmentMap);
+        environmentObjects = environment.Initialize(size, size, scale, heightMap, environmentMap);
         meshRenderer.material = testMat;
         meshCollider = gameObject.AddComponent<MeshCollider>();
 
         return heightMap;
     }
 
-
+    void IDespawnable.Despawn()
+    {
+        foreach(GameObject obj in environmentObjects)
+        {
+            Destroy(obj);
+        }
+    }
 }

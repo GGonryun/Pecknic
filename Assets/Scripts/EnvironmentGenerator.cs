@@ -10,11 +10,9 @@ public class EnvironmentGenerator : MonoBehaviour
     [Range(0, .499f)] [SerializeField] private float offset = 0.05f;
 
 
-    private List<GameObject> environment;
-
-    public void Initialize(int xSize, int zSize, int scale, PerlinNoise heightMap, PerlinNoise environmentSpawnLayout)
+    public List<GameObject> Initialize(int xSize, int zSize, int scale, PerlinNoise heightMap, PerlinNoise environmentSpawnLayout)
     {
-        environment = new List<GameObject>();
+        List<GameObject> environment = new List<GameObject>();
         float grow = 0;
 
         int xMin = (int)Mathf.Floor(xSize * offset);
@@ -36,6 +34,7 @@ public class EnvironmentGenerator : MonoBehaviour
                 }
             }
         }
+        return environment;
     }
 
 }
