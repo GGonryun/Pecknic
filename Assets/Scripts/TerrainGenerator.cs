@@ -2,10 +2,7 @@
 
 public class TerrainGenerator : MonoBehaviour
 {
-    [SerializeField] private int xSize = 5;
-    [SerializeField] private int zSize = 5;
-    [SerializeField] private int density = 5;
-    [SerializeField] private int scale = 5;
+   
     private EnvironmentGenerator environment;
     private MeshFilter meshFilter;
     private MeshRenderer meshRenderer;
@@ -21,7 +18,7 @@ public class TerrainGenerator : MonoBehaviour
         environment = gameObject.GetComponent<EnvironmentGenerator>();
     }
 
-    void Initialize()
+    public void Initialize(int xSize, int zSize, int density, int scale)
     {
         PerlinNoise heightMap = new PerlinNoise(xSize, zSize, density);
         PerlinNoise environmentMap = new PerlinNoise(xSize, zSize, 10);

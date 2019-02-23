@@ -3,11 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EnemySpawner<T> : Singleton<EnemySpawner<T>> where T : IDespawnable
+public abstract class EnemySpawner<TSpawn> : Singleton<EnemySpawner<TSpawn>> where TSpawn : IDespawnable
 {
+    public abstract TSpawn Spawn();
 
-    public abstract T Spawn();
-
-    public abstract void Despawn(T seagull);
-    
+    public abstract void Despawn(TSpawn seagull);
 }

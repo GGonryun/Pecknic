@@ -180,7 +180,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1414680532954910118}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -190,7 +190,7 @@ Transform:
   - {fileID: 1414680532955402628}
   m_Father: {fileID: 8756652940840508439}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!111 &1414680532961776760
 Animation:
   m_ObjectHideFlags: 0
@@ -651,6 +651,7 @@ GameObject:
   - component: {fileID: 1179520514172355728}
   - component: {fileID: 2890267287404399558}
   - component: {fileID: 1459846127042659273}
+  - component: {fileID: 6974913059078245461}
   - component: {fileID: 8527704341060219720}
   m_Layer: 0
   m_Name: Seagull
@@ -667,7 +668,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1459846127042659272}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10, y: 5, z: 10}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1414680532955402630}
@@ -729,10 +730,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.22
-  m_Height: 1.04
+  m_Radius: 0.2579495
+  m_Height: 0.8080448
   m_Direction: 2
-  m_Center: {x: 0, y: 0.14, z: 0}
+  m_Center: {x: -0.06635594, y: 0.18, z: 0.115977585}
 --- !u!114 &1459846127042659273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -745,6 +746,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8c15c315412e24d892596b06f366f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  speed: 0
+--- !u!114 &6974913059078245461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459846127042659272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce2bdac0ebd2f7a42bbf93bf7bea59f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notifiers:
+  - Picnic
+  - Home
 --- !u!54 &8527704341060219720
 Rigidbody:
   m_ObjectHideFlags: 0

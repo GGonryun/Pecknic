@@ -2,43 +2,50 @@
 
 public class Player : MonoBehaviour
 {
-    public float speed = 6.0f;
-    public float jumpSpeed = 8.0f;
-    public float gravity = 20.0f;
+    [SerializeField] private CharacterController controller;
+
+    [SerializeField] private float speed = 6.0f;
+    [SerializeField] private float jumpSpeed = 8.0f;
+    [SerializeField] private float gravity = 20.0f;
+    [SerializeField] private Vector2 sensitivity = Vector2.zero;
+    [SerializeField] private VectorRange verticalRange = VectorRange.zero;
+
+    [SerializeField] private Arm leftArm;
+    [SerializeField] private Arm rightArm;
+
 
     private Vector3 moveDirection = Vector3.zero;
     private float rotationDirection = 0f;
-    public CharacterController controller;
-
-    public Arm leftArm;
-    public Arm rightArm;
-
-    public Vector2 sensitivity = Vector2.zero;
-    public VectorRange verticalRange = VectorRange.zero;
-
-    float rotationY = 0F;
+    private float rotationY = 0F;
 
 
-    void Awake()
+    public void Spawn(Vector3 initialPosition)
+    {
+        transform.position = initialPosition;
+        this.gameObject.SetActive(true);
+    }
+    public void Despawn()
+    {
+        this.gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
     {
         leftArm.Collided += Destroy;
         rightArm.Collided += Destroy;
     }
 
-    void OnEnable()
+    private void OnDisable()
     {
-        //spawner = EnemySpawner.Current;
+        leftArm.Collided -= Destroy;
+        rightArm.Collided -= Destroy;
     }
 
     void Update()
     {
         Movement();
         Punching();
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Seagull gull = SeagullSpawner.Current.Spawn();
-            gull.gameObject.transform.position = new Vector3(10, 5, 10);
-        }
+        
     }
 
     void Punching()
@@ -80,4 +87,5 @@ public class Player : MonoBehaviour
     {
         e.Collider.gameObject.GetComponent<IDespawnable>().Despawn();
     }
+
 }

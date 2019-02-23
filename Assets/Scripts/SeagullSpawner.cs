@@ -5,10 +5,6 @@ using UnityEngine;
 public class SeagullSpawner : EnemySpawner<Seagull>
 {
     public SeagullFactory factory;
-    
-
-
-
 
     public override void Despawn(Seagull seagull)
     {
@@ -17,14 +13,9 @@ public class SeagullSpawner : EnemySpawner<Seagull>
 
     public override Seagull Spawn()
     {
-        Seagull newGull = factory.Get();
-
-
-
-
-        newGull.gameObject.SetActive(true);
-        return newGull;
+        return factory.Get();
     }
 
-   
+    
+
 }
