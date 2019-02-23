@@ -213,13 +213,13 @@ MonoBehaviour:
   terrain: {fileID: 5882969365950564438, guid: 85e3ce4d2ada1bc459e98199e1462c24, type: 3}
   xSize: 50
   zSize: 50
-  density: 5
-  scale: 5
+  density: 4
+  scale: 4
   player: {fileID: 2618660098833206498, guid: b8b4d9a01fa4e7c499bc04c6b8aba3ae, type: 3}
   spawner: {fileID: 1387745277}
-  seagullSpeed: 18.5
+  seagullSpeed: 51.9
   seagullSpeedRange: 0.109
-  seagullCooldown: 0.99
+  seagullCooldown: 5
   lifePoints: 5
 --- !u!4 &417612493
 Transform:

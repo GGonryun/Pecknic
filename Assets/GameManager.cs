@@ -14,6 +14,7 @@ public class GameManager : Singleton<GameManager>
     [Range(10, 100)] [SerializeField] private float seagullSpeed;
     [Range(0, 0.49f)] [SerializeField] private float seagullSpeedRange;
     [Range(0.01f, 5f)] [SerializeField] private float seagullCooldown;
+    [Range(1f, 5f)] [SerializeField] private float seagullFeedingSpeed;
 
     [SerializeField] private short lifePoints = 5;
 
@@ -46,7 +47,8 @@ public class GameManager : Singleton<GameManager>
 
             Vector3 p = new Vector3(Random.Range(xSize * .10f, xSize * .90f), Random.Range(scale * 2f, scale * 5f), Random.Range(zSize * .1f, zSize * .9f));
 
-            gull.Spawn(s, p);
+            float c = Random.Range(seagullFeedingSpeed * 0.5f, seagullFeedingSpeed * 2f);
+            gull.Spawn(s, p, c);
 
             gull.gameObject.SetActive(true);
             elapsedTime -= seagullCooldown;
