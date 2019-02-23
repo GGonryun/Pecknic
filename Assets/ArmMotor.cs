@@ -123,7 +123,7 @@ public class ArmMotor : MonoBehaviour
     {
         //Begin Arm Movement
         float elapsedTime = -0.1f;
-        while (elapsedTime <= maxDuration || !contact)
+        while (elapsedTime <= maxDuration)
         {
             float ratio = elapsedTime / maxDuration;
             float easedRatio = EaseFunction.Calculate(easeFunctionSelection, ratio);
@@ -132,7 +132,8 @@ public class ArmMotor : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
-        
+
+
     }
 
 
