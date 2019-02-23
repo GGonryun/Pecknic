@@ -10,13 +10,14 @@ public class Seagull : MonoBehaviour, IDespawnable
     private CollisionSystem collisionSystem;
     private bool hasBread = false;
     private float cooldown;
+    private SeagullSpawner spawner;
 
-    public void Spawn(float speed, Vector3 position, float cooldown)
+    public void Spawn(SeagullSpawner spawner, float speed, float cooldown)
     {
         AssignTarget("Home");
         this.speed = speed;
         this.cooldown = cooldown;
-        this.transform.position = position;
+        this.spawner = spawner;
         collisionSystem = GetComponent<CollisionSystem>();
         collisionSystem.Collided += ChangeDirection;
     }
@@ -47,7 +48,7 @@ public class Seagull : MonoBehaviour, IDespawnable
     void IDespawnable.Despawn()
     {
         target = null;
-        SeagullSpawner.Current.Despawn(this);
+        spawner.Despawn(this);
     }
 
     private void AssignTarget(string target)

@@ -5,27 +5,29 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     public TerrainGenerator terrain;
-    [SerializeField] private int xSize = 5;
-    [SerializeField] private int zSize = 5;
-    [SerializeField] private int density = 5;
-    [SerializeField] private int scale = 5;
     public Player player;
-    public SeagullSpawner spawner;
-    [Range(10, 100)] [SerializeField] private float seagullSpeed;
-    [Range(0, 0.49f)] [SerializeField] private float seagullSpeedRange;
-    [Range(0.01f, 5f)] [SerializeField] private float seagullCooldown;
-    [Range(1f, 5f)] [SerializeField] private float seagullFeedingSpeed;
+    public SeagullSpawner seagullSpawner;
+    [SerializeField] private int mapXSize = 5;
+    [SerializeField] private int mapZSize = 5;
+    [SerializeField] private int mapDensity = 5;
+    [SerializeField] private int mapScale = 5;
+    [SerializeField] private VectorRange seagullSpeedRange;
+    [SerializeField] private VectorRange seagullCooldownRange;
+    [SerializeField] private VectorRange seagullFeedingSpeedRange;
 
     [SerializeField] private short lifePoints = 5;
 
     void Start()
     {
         terrain = Instantiate(terrain) as TerrainGenerator;
-        terrain.Initialize(xSize, zSize, density, scale);
+        terrain.Initialize(mapXSize, mapZSize, mapDensity, mapScale);
 
         player = Instantiate(player) as Player;
-        Vector3 randomLocation = new Vector3(Random.Range(xSize * .10f, xSize * .90f), Random.Range(scale, scale * 2f), Random.Range(zSize * .1f, zSize * .9f));
+        Vector3 randomLocation = new Vector3(Random.Range(mapXSize * .10f, mapXSize * .90f), Random.Range(mapScale, mapScale * 2f), Random.Range(mapZSize * .1f, mapZSize * .9f));
         player.Spawn(randomLocation);
+
+        seagullSpawner = Instantiate(seagullSpawner) as SeagullSpawner;
+        seagullSpawner.Initialize(seagullSpeedRange, seagullFeedingSpeedRange);
         StartCoroutine(SpawnSeagulls());
 
     }
@@ -36,22 +38,19 @@ public class GameManager : Singleton<GameManager>
         float elapsedTime = 0f;
         while (true)
         {
-            while (elapsedTime <= seagullCooldown)
+            float maxTime = Random.Range(seagullCooldownRange.min, seagullCooldownRange.max);
+            while (elapsedTime <= maxTime)
             {
                 elapsedTime += Time.deltaTime;
                 yield return new WaitForEndOfFrame();
             }
-            Seagull gull = SeagullSpawner.Current.Spawn();
-            float r = seagullSpeed * seagullSpeedRange;
-            float s = Random.Range(r, seagullSpeed - r);
 
-            Vector3 p = new Vector3(Random.Range(xSize * .10f, xSize * .90f), Random.Range(scale * 2f, scale * 5f), Random.Range(zSize * .1f, zSize * .9f));
+            Seagull gull = seagullSpawner.Spawn();
 
-            float c = Random.Range(seagullFeedingSpeed * 0.5f, seagullFeedingSpeed * 2f);
-            gull.Spawn(s, p, c);
+            Vector3 newPosition = new Vector3(Random.Range(0, mapXSize), Random.Range(mapScale * 2f, mapScale * 5f), Random.Range(0, mapXSize));
 
-            gull.gameObject.SetActive(true);
-            elapsedTime -= seagullCooldown;
+            gull.transform.position = newPosition;
+            elapsedTime -= maxTime;
         }
 
     }

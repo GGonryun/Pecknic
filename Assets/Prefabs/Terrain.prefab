@@ -44,10 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52810fe490ac6194f83d52ece574acbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xSize: 20
-  zSize: 20
-  density: 5
-  scale: 5
   testMat: {fileID: 2100000, guid: f9a0031d29b3ac44f885008ffabe0895, type: 2}
 --- !u!114 &5882969365950564435
 MonoBehaviour:
@@ -63,4 +59,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   factory: {fileID: 11400000, guid: 2dfeb3734cf78b940a6ccdeef1bec7b7, type: 2}
   growthRate: 123.7
-  offset: 0.05
+  offset: 0.01

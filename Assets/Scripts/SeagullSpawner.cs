@@ -5,6 +5,17 @@ using UnityEngine;
 public class SeagullSpawner : EnemySpawner<Seagull>
 {
     public SeagullFactory factory;
+    private bool ready = false;
+    private VectorRange movementSpeedRange;
+    private VectorRange feedngSpeedRange;
+
+
+    public void Initialize(VectorRange movementSpeedRange, VectorRange feedingSpeedRange)
+    {
+        this.movementSpeedRange = movementSpeedRange;
+        this.feedngSpeedRange = feedingSpeedRange;
+        ready = true;
+    }
 
     public override void Despawn(Seagull seagull)
     {
@@ -13,7 +24,17 @@ public class SeagullSpawner : EnemySpawner<Seagull>
 
     public override Seagull Spawn()
     {
-        return factory.Get();
+        if(!ready)
+        {
+            throw new System.Exception("Uninitialized SeagullSpawner");
+        }
+
+        Seagull gull = factory.Get();
+        float speed = Random.Range(movementSpeedRange.min, movementSpeedRange.max);
+        float cooldown = Random.Range(feedngSpeedRange.min, feedngSpeedRange.max);
+        gull.Spawn(this, speed, cooldown);
+        gull.gameObject.SetActive(true);
+        return gull;
     }
 
     
