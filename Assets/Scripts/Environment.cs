@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class Environment : IDespawnable
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public EnvironmentSpawner spawner;
+
+
+    public void Despawn()
     {
-        
+        spawner.Despawn(this);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+  
 }
