@@ -65,23 +65,25 @@ public class ArmMotor : MonoBehaviour
 {
     private bool ready = true;
     private bool dangerous = false;
-    private bool contact = false;
-    private Vector3 initialPos = Vector3.zero;
     [SerializeField] private EaseFunctionType easeFunctionSelection = EaseFunctionType.NoEase;
     [SerializeField] private float travelDistance = 2f;
     [SerializeField] private float travelDuration = 2f;
     public CollisionSystem collisionSystem;
+    private ObjectRecycler recycler;
 
 
     void Awake()
     {
-        initialPos = transform.localPosition;
-        collisionSystem.Collided += WarnMe;
+        collisionSystem.Collided += Destroy;
+        recycler = ObjectRecycler.Current;
     }
 
-    public void WarnMe(object sender, OnCollisionEventArgs e)
+    public void Destroy(object sender, OnCollisionEventArgs e)
     {
-        contact = true;
+        if (e.Collision.gameObject.CompareTag("Seagull"))
+        {
+            recycler.Recycle(e.Collision.gameObject);
+        }
     }
 
     public void Punch()
@@ -112,6 +114,7 @@ public class ArmMotor : MonoBehaviour
         yield return ArmAction(startingPos, newPos, travelDuration, easeFunctionSelection);
         dangerous = false;
 
+        //Backwards action
         yield return ArmAction(newPos, startingPos, travelDuration, easeFunctionSelection);
         transform.localPosition = startingPos;
 
@@ -132,8 +135,6 @@ public class ArmMotor : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
-
-
     }
 
 

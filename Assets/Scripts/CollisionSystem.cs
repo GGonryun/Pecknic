@@ -30,7 +30,6 @@ public class CollisionSystem : MonoBehaviour
 
     private void OnCollided(OnCollisionEventArgs e)
     {
-        Debug.Log("1");
         collided?.Invoke(this, e);
     }
 
