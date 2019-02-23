@@ -41,21 +41,19 @@ public class Player : MonoBehaviour
         Punching();
     }
 
-    private void Punching()
+    void Punching()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Debug.Log("A: Left Punch Attempted");
             leftArm.Punch();
         }
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            Debug.Log("A: Right Punch Attempted");  
             rightArm.Punch();
         }
     }
 
-    private void Movement()
+    void Movement()
     {
         if (controller.isGrounded)
         {

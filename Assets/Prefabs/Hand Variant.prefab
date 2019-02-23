@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7fbc9fa4664a7d4c92ab45e30c7d65b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  easeFunctionSelection: 0
   travelDistance: 2
   travelDuration: 2
+  collisionSystem: {fileID: 6866128614796600904}
 --- !u!64 &157057977
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -28,6 +30,18 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300000, guid: 1234ef1ebf6bb434da58599c11d1fd80, type: 3}
+--- !u!114 &6866128614796600904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9196351837342504845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce2bdac0ebd2f7a42bbf93bf7bea59f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &9196351837342404911
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -37,7 +51,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: 1234ef1ebf6bb434da58599c11d1fd80, type: 3}
       propertyPath: m_Name
-      value: Hand
+      value: Hand Variant
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1234ef1ebf6bb434da58599c11d1fd80, type: 3}
       propertyPath: m_LocalPosition.x
