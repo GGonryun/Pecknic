@@ -1,28 +1,27 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class ArmMotor : MonoBehaviour
+public class Arm : MonoBehaviour
 {
     private bool ready = true;
     private bool dangerous = false;
     [SerializeField] private EaseFunctionType easeFunctionSelection = EaseFunctionType.NoEase;
     [SerializeField] private float travelDistance = 2f;
     [SerializeField] private float travelDuration = 2f;
-    public CollisionSystem collisionSystem;
-    private ObjectRecycler recycler;
+    [SerializeField] private CollisionSystem collisionSystem;
 
+    public event OnCollisionEventHandler Collided;
 
     void Awake()
     {
-        collisionSystem.Collided += Destroy;
-        recycler = ObjectRecycler.Current;
+        collisionSystem.Collided += OnCollision;
     }
 
-    public void Destroy(object sender, OnCollisionEventArgs e)
+    public void OnCollision(object sender, OnCollisionEventArgs e)
     {
         if(dangerous)
         {
-            recycler.Recycle(e.Collision.gameObject);
+            Collided?.Invoke(this, e);
         }
     }
 

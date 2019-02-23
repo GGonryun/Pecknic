@@ -19,10 +19,9 @@ public class TerrainGenerator : MonoBehaviour
         meshFilter = gameObject.AddComponent<MeshFilter>();
         meshRenderer = gameObject.AddComponent<MeshRenderer>();
         environment = gameObject.GetComponent<EnvironmentGenerator>();
-        
     }
 
-    void Start()
+    void Initialize()
     {
         PerlinNoise heightMap = new PerlinNoise(xSize, zSize, density);
         PerlinNoise environmentMap = new PerlinNoise(xSize, zSize, 10);

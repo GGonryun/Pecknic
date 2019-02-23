@@ -7,10 +7,10 @@ public delegate void OnCollisionEventHandler(object sender, OnCollisionEventArgs
 
 public class OnCollisionEventArgs : EventArgs
 {
-    public Collision Collision { get; private set; }
-    public OnCollisionEventArgs(Collision collision)
+    public Collider Collider { get; private set; }
+    public OnCollisionEventArgs(Collider collider)
     {
-        this.Collision = collision;
+        this.Collider = collider;
     }
 }
 
@@ -33,15 +33,14 @@ public class CollisionSystem : MonoBehaviour
         collided?.Invoke(this, e);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collider)
     {
-        if(CollidedWithEnemies(collision))
+        if (CollidedWithEnemies(collider))
         {
-            OnCollided(new OnCollisionEventArgs(collision));
+            OnCollided(new OnCollisionEventArgs(collider));
         }
     }
-
-    private bool CollidedWithEnemies(Collision collision)
+    private bool CollidedWithEnemies(Collider collision)
     {
 
         foreach (string enemy in enemies)

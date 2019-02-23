@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Environment Factory", menuName = "Create Environment Factory")]
+[CreateAssetMenu(fileName = "New Environment Factory", menuName = "Factories/Environment Factory")]
 public class EnvironmentFactory : ScriptableObject
 {
     [SerializeField] private GameObject[] environmentObjects;

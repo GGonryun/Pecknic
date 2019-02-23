@@ -10,18 +10,35 @@ public class Player : MonoBehaviour
     private float rotationDirection = 0f;
     public CharacterController controller;
 
-    public ArmMotor leftArm;
-    public ArmMotor rightArm;
+    public Arm leftArm;
+    public Arm rightArm;
 
     public Vector2 sensitivity = Vector2.zero;
     public VectorRange verticalRange = VectorRange.zero;
 
     float rotationY = 0F;
 
+
+    void Awake()
+    {
+        leftArm.Collided += Destroy;
+        rightArm.Collided += Destroy;
+    }
+
+    void OnEnable()
+    {
+        //spawner = EnemySpawner.Current;
+    }
+
     void Update()
     {
         Movement();
         Punching();
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Seagull gull = SeagullSpawner.Current.Spawn();
+            gull.gameObject.transform.position = new Vector3(10, 5, 10);
+        }
     }
 
     void Punching()
@@ -57,5 +74,10 @@ public class Player : MonoBehaviour
 
         // Move the controller
         controller.Move(moveDirection * Time.deltaTime);
+    }
+
+    void Destroy(object sender, OnCollisionEventArgs e) 
+    {
+        e.Collider.gameObject.GetComponent<IDespawnable>().Despawn();
     }
 }
