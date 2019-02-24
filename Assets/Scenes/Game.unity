@@ -287,12 +287,27 @@ PrefabInstance:
     - target: {fileID: 3622848680478827194, guid: 8b750905e9ea03548a1a109dfba5efbb,
         type: 3}
       propertyPath: seagullSpeedRange.min
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3622848680478827194, guid: 8b750905e9ea03548a1a109dfba5efbb,
         type: 3}
       propertyPath: seagullSpeedRange.max
       value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3622848680478827194, guid: 8b750905e9ea03548a1a109dfba5efbb,
+        type: 3}
+      propertyPath: mapSize
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 3622848680478827194, guid: 8b750905e9ea03548a1a109dfba5efbb,
+        type: 3}
+      propertyPath: mapScale
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3622848680478827194, guid: 8b750905e9ea03548a1a109dfba5efbb,
+        type: 3}
+      propertyPath: mapDensity
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b750905e9ea03548a1a109dfba5efbb, type: 3}
