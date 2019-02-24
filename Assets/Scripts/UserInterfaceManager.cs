@@ -16,6 +16,9 @@ public class UserInterfaceManager : MonoBehaviour
         gameBar.Initialize();
     }
 
+
+
+
     public void GameOver()
     {
         gameBar.EndGame();

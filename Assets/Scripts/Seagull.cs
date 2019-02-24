@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
 public class Seagull : MonoBehaviour, IDespawnable
@@ -25,7 +23,15 @@ public class Seagull : MonoBehaviour, IDespawnable
         this.spawner = spawner;
         collisionSystem = GetComponent<CollisionSystem>();
         collisionSystem.Collided += ChangeDirection;
-        StartCoroutine(Speak());
+    }
+
+    public IEnumerator Speak()
+    {
+        while(true)
+        {
+            AudioManager.Current.PlaySound("squack");
+            yield return new WaitForSeconds(Random.Range(0f, 5f));
+        }
     }
 
     private void ChangeDirection(object sender, OnCollisionEventArgs e)
@@ -51,13 +57,6 @@ public class Seagull : MonoBehaviour, IDespawnable
         }
     }
 
-    IEnumerator Speak()
-    {
-        while(true)
-        {
-
-        }
-    }
 
     void IDespawnable.Despawn()
     {

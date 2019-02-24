@@ -8,6 +8,7 @@ public class Explosion : MonoBehaviour
     {
         var exp = GetComponent<ParticleSystem>();
         exp.Play();
+        AudioManager.Current.PlaySound("explosion");
         StartCoroutine(TimedExplosion(exp.main.duration));
 
     }

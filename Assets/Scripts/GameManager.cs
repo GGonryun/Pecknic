@@ -99,6 +99,9 @@ public class GameManager : Singleton<GameManager>
 
             //Create the input manager.
             DontDestroyOnLoad(keyboardManager);
+
+            //Protect the AudioManager;
+            DontDestroyOnLoad(AudioManager.Current);
         }
         else
         {
@@ -138,6 +141,8 @@ public class GameManager : Singleton<GameManager>
 
             Vector3 randomLocation = new Vector3(x, y, z);
             player.Spawn(randomLocation);
+
+            AudioManager.Current.PlaySound("music");
         }
         else
         {
@@ -159,6 +164,8 @@ public class GameManager : Singleton<GameManager>
 
             UIManager.GameOver();
             keyboardManager.SetActive(true);
+
+            AudioManager.Current.StopAllSounds();
         }
         else
         {

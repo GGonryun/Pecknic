@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Andtech;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
@@ -14,6 +15,7 @@ public class Sound
 
     [Range(0f, 0.5f)]
     public float randomVolume = 0.1f;
+    [Range(0f, 0.5f)]
     public float randomPitch = 0.1f;
 
     private AudioSource source;
@@ -25,33 +27,24 @@ public class Sound
     }
     public void Play()
     {
-        source.volume = volume * (1+ Random.Range(-randomVolume / 2f, randomVolume / 2f));
+        source.volume = volume * (1 + Random.Range(-randomVolume / 2f, randomVolume / 2f));
         source.pitch = pitch * (1 + Random.Range(-randomPitch / 2f, randomPitch / 2f)); ;
         source.Play();
     }
+
+    public void Stop()
+    {
+        source.Stop();
+    }
 }
-public class AudioManager : MonoBehaviour {
-
-    public static AudioManager instance;
-
+public class AudioManager : Singleton<AudioManager>
+{
     [SerializeField]
     Sound[] sounds;
 
-    private void Awake()
-    {
-        if (instance != null)
-        {
-            Debug.LogError("More than one AudioManager in scene.");
-        }
-        else
-        {
-            instance = this;
-        }
-    }
-
     private void Start()
     {
-        for(int i = 0; i < sounds.Length; i++)
+        for (int i = 0; i < sounds.Length; i++)
         {
             GameObject _go = new GameObject("Sound_" + i + "_" + sounds[i].name);
             _go.transform.SetParent(this.transform);
@@ -60,17 +53,37 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
-    public void PlaySound (string _name)
+    public void PlaySound(string name)
     {
         for (int i = 0; i < sounds.Length; i++)
         {
-            if (sounds[i].name == _name)
+            if (sounds[i].name == name)
             {
                 sounds[i].Play();
                 return;
             }
         }
         //no sound with _name
-        Debug.LogWarning("AudioManager: Sound not found in list: " + _name);
+        Debug.LogWarning($"AudioManager: Sound not found in list: {name}");
+    }
+
+    public void StopSound(string name)
+    {
+        for (int i = 0; i < sounds.Length; i++)
+        {
+            if (sounds[i].name == name)
+            {
+                sounds[i].Stop();
+                return;
+            }
+        }
+    }
+
+    public void StopAllSounds()
+    {
+        for (int i = 0; i < sounds.Length; i++)
+        {
+            sounds[i].Stop();
+        }
     }
 }

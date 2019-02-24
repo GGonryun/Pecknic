@@ -35,6 +35,7 @@ public class SeagullSpawner : Spawner<Seagull>
         float cooldown = Random.Range(feedngSpeedRange.min, feedngSpeedRange.max);
         gull.Spawn(this, speed, cooldown);
         gull.gameObject.SetActive(true);
+        gull.StartCoroutine(gull.Speak());
         return gull;
     }
 
