@@ -1,0 +1,6 @@
+1. Game was optimized by using ObjectPoolers wherever possible.
+2. Game was optimized by creating a custom shader allowing the color to change based on height.
+3. Factories are optimized by using stacks. This ensures access, and removal is always O(1) since we just push and pop from the top.
+4. MultiFactory is optimized by using a list indexed only at the end. This ensures that access and removal stays at O(1) by preventing the list from auto-adjusting.
+5. MeshGenerator is done in O(n^2), the double for loop is necessary in order to iterate through and spawn all of the vertices. The triangles are also drawn over O(n^2) since we need to iterate over each of the vertices again.
+6. PerlinNoise is done in O(n^2), the double for loop is necessary to iterate over each of the values in the 2d array.
