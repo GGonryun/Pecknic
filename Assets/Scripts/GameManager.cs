@@ -25,13 +25,15 @@ public class GameManager : Singleton<GameManager>
 
     [SerializeField] private int nestTotal = 3;
     [SerializeField] private VectorRange seagullSpeedRange;
-    [SerializeField] private VectorRange seagullCooldownRange;
+    [SerializeField] private VectorRange seagullSpawnCooldownRange;
     [SerializeField] private VectorRange seagullFeedingSpeedRange;
 
     [SerializeField] private int breadTotal = 5;
     [SerializeField] private int startingLifePoints = 5;
 
     private int currentLifePoints = 0;
+
+    private int enemyCount = 0;
 
     private List<IDespawnable> despawnableObjects;
     private TerrainGenerator terrain;
@@ -49,7 +51,7 @@ public class GameManager : Singleton<GameManager>
         {
             DecreaseLifePoints();
         }
-        
+
     }
 
     void Start()
@@ -214,9 +216,10 @@ public class GameManager : Singleton<GameManager>
     IEnumerator SpawnSeagulls()
     {
         float elapsedTime = 0f;
+        enemyCount = 0;
         while (true)
         {
-            float maxTime = Random.Range(seagullCooldownRange.min, seagullCooldownRange.max);
+            float maxTime = Mathf.Clamp(Random.Range(seagullSpawnCooldownRange.min, seagullSpawnCooldownRange.max) - (.2f * enemyCount), 2f, 100f);
             while (elapsedTime <= maxTime)
             {
                 elapsedTime += Time.deltaTime;
@@ -229,6 +232,7 @@ public class GameManager : Singleton<GameManager>
             Seagull gull = seagullSpawner.Spawn();
             gull.transform.position = newPosition;
             despawnableObjects.Add(gull);
+            enemyCount++;
             elapsedTime -= maxTime;
         }
 

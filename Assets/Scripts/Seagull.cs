@@ -15,6 +15,8 @@ public class Seagull : MonoBehaviour, IDespawnable
     private string home = "Home";
     private string food = "Picnic";
 
+
+
     public void Spawn(SeagullSpawner spawner, float speed, float cooldown)
     {
         AssignTarget("Home");
@@ -50,6 +52,9 @@ public class Seagull : MonoBehaviour, IDespawnable
 
     void IDespawnable.Despawn()
     {
+        Explosion exp = ExplosionSpawner.Current.CreateExplosion(this.transform.position);
+        exp.Explode();
+
         target = null;
         spawner.Despawn(this);
     }
