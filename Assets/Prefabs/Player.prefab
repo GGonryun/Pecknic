@@ -271,7 +271,7 @@ MonoBehaviour:
   speed: 6
   jumpSpeed: 8
   gravity: 20
-  sensitivity: {x: 15, y: 15}
+  sensitivity: {x: 5, y: 5}
   verticalRange:
     min: -25
     max: 90
