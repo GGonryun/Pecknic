@@ -18,7 +18,7 @@ public class ExplosionSpawner : Singleton<ExplosionSpawner>
         Explosion exp = factory.Get();
 
         exp.transform.position = position;
-
+        exp.gameObject.SetActive(true);
         return exp;
     }
 

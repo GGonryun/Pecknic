@@ -86,6 +86,7 @@ public class Player : MonoBehaviour, IDespawnable
     void Destroy(object sender, OnCollisionEventArgs e) 
     {
         e.Collider.gameObject.GetComponent<IDespawnable>().Despawn();
+        GameManager.Current.IncreaseScore();
     }
 
 }

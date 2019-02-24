@@ -25,6 +25,7 @@ public class Seagull : MonoBehaviour, IDespawnable
         this.spawner = spawner;
         collisionSystem = GetComponent<CollisionSystem>();
         collisionSystem.Collided += ChangeDirection;
+        StartCoroutine(Speak());
     }
 
     private void ChangeDirection(object sender, OnCollisionEventArgs e)
@@ -50,8 +51,18 @@ public class Seagull : MonoBehaviour, IDespawnable
         }
     }
 
+    IEnumerator Speak()
+    {
+        while(true)
+        {
+
+        }
+    }
+
     void IDespawnable.Despawn()
     {
+        StopAllCoroutines();
+
         Explosion exp = ExplosionSpawner.Current.CreateExplosion(this.transform.position);
         exp.Explode();
 

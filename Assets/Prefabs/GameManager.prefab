@@ -57,6 +57,8 @@ MonoBehaviour:
   UIManager: {fileID: 3664087381462010416, guid: d688b288a120a7246804640d932fcc16,
     type: 3}
   keyboardManager: {fileID: 0}
+  explosionSpawner: {fileID: 7630233778542281275, guid: 4dea5c94f66a8fb47b902158390827e6,
+    type: 3}
   mapSize: 50
   mapDensity: 5
   mapScale: 5
@@ -65,9 +67,9 @@ MonoBehaviour:
   seagullSpeedRange:
     min: 20
     max: 50
-  seagullCooldownRange:
+  seagullSpawnCooldownRange:
     min: 5
-    max: 10
+    max: 15
   seagullFeedingSpeedRange:
     min: 3
     max: 10

@@ -7,13 +7,13 @@ public enum MenuNames { Main, Playing, GameOver}
 public class UserInterfaceManager : MonoBehaviour
 {
 
-    [SerializeField] HealthBarMenu healthBar;
+    [SerializeField] GameBarMenu gameBar;
     [SerializeField] GameOverMenu gameOver;
     [SerializeField] MainMenu mainMenu;
 
     public void Initialize()
     {
-        healthBar.Initialize();
+        gameBar.Initialize();
     }
 
 
@@ -21,8 +21,8 @@ public class UserInterfaceManager : MonoBehaviour
 
     public void GameOver()
     {
-        healthBar.EndGame();
-        healthBar.Disable();
+        gameBar.EndGame();
+        gameBar.Disable();
         mainMenu.Disable();
 
         gameOver.Enable();
@@ -33,13 +33,13 @@ public class UserInterfaceManager : MonoBehaviour
         gameOver.Disable();
         mainMenu.Disable();
 
-        healthBar.Enable();
-        healthBar.StartGame(i);
+        gameBar.Enable();
+        gameBar.StartGame(i);
     }
 
     public void DisplayMenu()
     {
-        healthBar.Disable();
+        gameBar.Disable();
         gameOver.Disable();
 
         mainMenu.Enable();

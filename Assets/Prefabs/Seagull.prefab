@@ -747,7 +747,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  explosionTemplate: {fileID: 0}
 --- !u!114 &6974913059078245461
 MonoBehaviour:
   m_ObjectHideFlags: 0

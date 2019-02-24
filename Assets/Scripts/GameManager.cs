@@ -14,9 +14,9 @@ public class GameManager : Singleton<GameManager>
     public BreadSpawner breadSpawner;
     public EnvironmentSpawner environmentSpawner;
     public NestSpawner nestSpawner;
-    public System.EventHandler LifeLost;
     public UserInterfaceManager UIManager;
     public GameObject keyboardManager;
+    public ExplosionSpawner explosionSpawner;
 
     [SerializeField] private int mapSize = 5;
     [SerializeField] private int mapDensity = 5;
@@ -31,8 +31,10 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private int breadTotal = 5;
     [SerializeField] private int startingLifePoints = 5;
 
-    private int currentLifePoints = 0;
+    public System.EventHandler LifeLost;
+    public System.EventHandler ScoreIncreased;
 
+    private int currentLifePoints = 0;
     private int enemyCount = 0;
 
     private List<IDespawnable> despawnableObjects;
@@ -46,12 +48,10 @@ public class GameManager : Singleton<GameManager>
 
     void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.P))
         {
             DecreaseLifePoints();
         }
-
     }
 
     void Start()
@@ -92,6 +92,10 @@ public class GameManager : Singleton<GameManager>
             UIManager = Instantiate(UIManager) as UserInterfaceManager;
             UIManager.Initialize();
             DontDestroyOnLoad(UIManager);
+
+            //Create the ExplosionSpawner.
+            explosionSpawner = Instantiate(explosionSpawner) as ExplosionSpawner;
+            DontDestroyOnLoad(explosionSpawner);
 
             //Create the input manager.
             DontDestroyOnLoad(keyboardManager);
@@ -134,7 +138,6 @@ public class GameManager : Singleton<GameManager>
 
             Vector3 randomLocation = new Vector3(x, y, z);
             player.Spawn(randomLocation);
-
         }
         else
         {
@@ -162,8 +165,6 @@ public class GameManager : Singleton<GameManager>
             Debug.LogError($"Can't end game because gamestate is: {GameState}");
         }
     }
-
-
 
     public void ReturnToMenu()
     {
@@ -251,5 +252,11 @@ public class GameManager : Singleton<GameManager>
         {
             EndGame();
         }
+    }
+
+    public void IncreaseScore()
+    {
+        ScoreIncreased?.Invoke(this, new System.EventArgs());
+
     }
 }
