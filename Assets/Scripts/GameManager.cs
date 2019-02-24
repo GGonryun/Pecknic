@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public enum State { Uninitialized, Active, Inactive };
 
 public class GameManager : Singleton<GameManager>
@@ -15,6 +14,9 @@ public class GameManager : Singleton<GameManager>
     public BreadSpawner breadSpawner;
     public EnvironmentSpawner environmentSpawner;
     public NestSpawner nestSpawner;
+    public System.EventHandler LifeLost;
+    public UserInterfaceManager UIManager;
+    public GameObject keyboardManager;
 
     [SerializeField] private int mapSize = 5;
     [SerializeField] private int mapDensity = 5;
@@ -27,7 +29,9 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private VectorRange seagullFeedingSpeedRange;
 
     [SerializeField] private int breadTotal = 5;
-    [SerializeField] private int lifePoints = 5;
+    [SerializeField] private int startingLifePoints = 5;
+
+    private int currentLifePoints = 0;
 
     private List<IDespawnable> despawnableObjects;
     private TerrainGenerator terrain;
@@ -40,23 +44,17 @@ public class GameManager : Singleton<GameManager>
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I))
+
+        if (Input.GetKeyDown(KeyCode.P))
         {
-            Initialize();
+            DecreaseLifePoints();
         }
-        else if (Input.GetKeyDown(KeyCode.O))
-        {
-            StartGame();
-        }
-        else if (Input.GetKeyDown(KeyCode.P))
-        {
-            EndGame();
-        }
+        
     }
 
-    void Initialize()
+    void Start()
     {
-        if(gameState == State.Uninitialized)
+        if (gameState == State.Uninitialized)
         {
             gameState = State.Inactive;
 
@@ -88,8 +86,13 @@ public class GameManager : Singleton<GameManager>
             nestSpawner.Initialize(mapSize, mapScale);
             DontDestroyOnLoad(nestSpawner);
 
-            //Start the game.
-            StartGame();
+            //Ceate the UI.
+            UIManager = Instantiate(UIManager) as UserInterfaceManager;
+            UIManager.Initialize();
+            DontDestroyOnLoad(UIManager);
+
+            //Create the input manager.
+            DontDestroyOnLoad(keyboardManager);
         }
         else
         {
@@ -97,18 +100,17 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-
-    void StartGame()
+    public void StartGame()
     {
         if (gameState == State.Inactive)
         {
             gameState = State.Active;
-            
+
+            keyboardManager.SetActive(false);
+
             terrain = Instantiate(terrainTemplate) as TerrainGenerator;
             PerlinNoise heightMap = terrain.Initialize(mapSize, mapDensity, mapScale);
 
-            Vector3 randomLocation = new Vector3(Random.Range(mapSize * .10f, mapSize * .90f), Random.Range(mapScale, mapScale * 2f), Random.Range(mapSize * .1f, mapSize * .9f));
-            player.Spawn(randomLocation);
 
             breadSpawner.RefreshMap(heightMap);
             SpawnBread();
@@ -118,7 +120,19 @@ public class GameManager : Singleton<GameManager>
 
             SpawnNests();
 
+            UIManager.DisplayGame(startingLifePoints);
+            currentLifePoints = startingLifePoints;
+
             StartCoroutine(SpawnSeagulls());
+
+            float x = Random.Range(mapSize * .10f, mapSize * .90f);
+            float z = Random.Range(mapSize * .10f, mapSize * .90f);
+            float height = heightMap[(int)Mathf.Floor(x), (int)Mathf.Floor(z)];
+            float y = Random.Range(height * mapScale * 1.5f, height * mapScale * 2f);
+
+            Vector3 randomLocation = new Vector3(x, y, z);
+            player.Spawn(randomLocation);
+
         }
         else
         {
@@ -126,9 +140,9 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    void EndGame()
+    public void EndGame()
     {
-        if(gameState == State.Active)
+        if (gameState == State.Active)
         {
             StopAllCoroutines();
             Disable(player);
@@ -137,11 +151,21 @@ public class GameManager : Singleton<GameManager>
 
             Destroy(terrain);
             gameState = State.Inactive;
+
+            UIManager.GameOver();
+            keyboardManager.SetActive(true);
         }
         else
         {
             Debug.LogError($"Can't end game because gamestate is: {GameState}");
         }
+    }
+
+
+
+    public void ReturnToMenu()
+    {
+        UIManager.DisplayMenu();
     }
 
     void DisableAll(List<IDespawnable> list)
@@ -161,25 +185,31 @@ public class GameManager : Singleton<GameManager>
     {
         for (int i = 0; i < environmentTotal; i++)
         {
-            despawnableObjects.Add(environmentSpawner.Spawn());
+            Environment newEnvironmentObject = environmentSpawner.Spawn();
+            newEnvironmentObject.gameObject.SetActive(true);
+            despawnableObjects.Add(newEnvironmentObject);
         }
     }
+
     void SpawnBread()
     {
         for (int i = 0; i < breadTotal; i++)
         {
-            despawnableObjects.Add(breadSpawner.Spawn());
+            Bread newBreadObject = breadSpawner.Spawn();
+            newBreadObject.gameObject.SetActive(true);
+            despawnableObjects.Add(newBreadObject);
         }
     }
 
     void SpawnNests()
     {
-        for(int i = 0; i < nestTotal; i++)
+        for (int i = 0; i < nestTotal; i++)
         {
-            despawnableObjects.Add(nestSpawner.Spawn());
+            Nest newNestObject = nestSpawner.Spawn();
+            newNestObject.gameObject.SetActive(true);
+            despawnableObjects.Add(newNestObject);
         }
     }
-
 
     IEnumerator SpawnSeagulls()
     {
@@ -204,8 +234,18 @@ public class GameManager : Singleton<GameManager>
 
     }
 
+    void OnLifeLost()
+    {
+        LifeLost?.Invoke(this, new System.EventArgs());
+    }
+
     public void DecreaseLifePoints()
     {
-        lifePoints--;
+        currentLifePoints--;
+        OnLifeLost();
+        if (currentLifePoints <= 0)
+        {
+            EndGame();
+        }
     }
 }

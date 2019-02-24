@@ -21,7 +21,8 @@ public class Player : MonoBehaviour, IDespawnable
 
     public void Spawn(Vector3 initialPosition)
     {
-        transform.position = initialPosition;
+        initialPosition.y += 5f;
+        controller.gameObject.transform.position = initialPosition;
         this.gameObject.SetActive(true);
     }
     public void Despawn()

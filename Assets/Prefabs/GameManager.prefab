@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3622848680478827197
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3622848680478827195}
+  - component: {fileID: 3622848680478827194}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3622848680478827195
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3622848680478827197}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.3522755, y: 0.14870802, z: 0.35864705}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3622848680478827194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3622848680478827197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cccce920605828c4398cc6afcebc20d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  terrainTemplate: {fileID: 5882969365950564438, guid: 85e3ce4d2ada1bc459e98199e1462c24,
+    type: 3}
+  player: {fileID: 2618660098833206498, guid: b8b4d9a01fa4e7c499bc04c6b8aba3ae, type: 3}
+  seagullSpawner: {fileID: 3250300209531214402, guid: 5910a138e8c93524f8785ab9483a9084,
+    type: 3}
+  breadSpawner: {fileID: 480039531273197475, guid: cc0d199acc6846a479b869dc955ea5a2,
+    type: 3}
+  environmentSpawner: {fileID: 6895390010627604361, guid: 21a84bdd295d28a4db5b5c9a9e02ffbd,
+    type: 3}
+  nestSpawner: {fileID: 4221278614057776651, guid: 28f9cd273520cfb488bc621ea8d2ac2a,
+    type: 3}
+  UIManager: {fileID: 3664087381462010416, guid: d688b288a120a7246804640d932fcc16,
+    type: 3}
+  keyboardManager: {fileID: 0}
+  mapSize: 50
+  mapDensity: 5
+  mapScale: 5
+  environmentTotal: 10
+  nestTotal: 3
+  seagullSpeedRange:
+    min: 20
+    max: 50
+  seagullCooldownRange:
+    min: 5
+    max: 10
+  seagullFeedingSpeedRange:
+    min: 3
+    max: 10
+  breadTotal: 5
+  startingLifePoints: 5

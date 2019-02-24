@@ -10,6 +10,7 @@ public class NestSpawner : Spawner<Nest>
 
     public void Initialize(int mapSize, int mapScale)
     {
+        factory.Initialize();
         this.mapSize = mapSize;
         this.mapScale = mapScale;
     }
