@@ -267,7 +267,7 @@ PrefabInstance:
     - target: {fileID: 3622848680478827194, guid: 8b750905e9ea03548a1a109dfba5efbb,
         type: 3}
       propertyPath: breadTotal
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3622848680478827194, guid: 8b750905e9ea03548a1a109dfba5efbb,
         type: 3}
@@ -282,7 +282,7 @@ PrefabInstance:
     - target: {fileID: 3622848680478827194, guid: 8b750905e9ea03548a1a109dfba5efbb,
         type: 3}
       propertyPath: seagullSpawnCooldownRange.max
-      value: 15
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 3622848680478827194, guid: 8b750905e9ea03548a1a109dfba5efbb,
         type: 3}
