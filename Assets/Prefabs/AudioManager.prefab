@@ -50,7 +50,7 @@ MonoBehaviour:
     pitch: 1.006
     randomVolume: 0
     randomPitch: 0
-  - name: squack
+  - name: squawk
     clip: {fileID: 0}
     volume: 0.358
     pitch: 1.001

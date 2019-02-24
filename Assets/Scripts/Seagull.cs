@@ -29,7 +29,7 @@ public class Seagull : MonoBehaviour, IDespawnable
     {
         while(true)
         {
-            AudioManager.Current.PlaySound("squack");
+            AudioManager.Current.PlaySound("squawk");
             yield return new WaitForSeconds(Random.Range(0f, 5f));
         }
     }
