@@ -29,6 +29,15 @@ public class Sound
     {
         source.volume = volume * (1 + Random.Range(-randomVolume / 2f, randomVolume / 2f));
         source.pitch = pitch * (1 + Random.Range(-randomPitch / 2f, randomPitch / 2f)); ;
+        source.loop = false;
+        source.Play();
+    }
+
+    public void Loop()
+    {
+        source.volume = volume * (1 + Random.Range(-randomVolume / 2f, randomVolume / 2f));
+        source.pitch = pitch * (1 + Random.Range(-randomPitch / 2f, randomPitch / 2f)); ;
+        source.loop = true;
         source.Play();
     }
 
@@ -53,6 +62,20 @@ public class AudioManager : Singleton<AudioManager>
         }
     }
 
+    public void LoopSound(string name)
+    {
+        for (int i = 0; i < sounds.Length; i++)
+        {
+            if (sounds[i].name == name)
+            {
+                sounds[i].Loop();
+                return;
+            }
+        }
+        //no sound with name
+        Debug.LogWarning($"AudioManager: Sound not found in list: {name}");
+    }
+
     public void PlaySound(string name)
     {
         for (int i = 0; i < sounds.Length; i++)
@@ -63,7 +86,7 @@ public class AudioManager : Singleton<AudioManager>
                 return;
             }
         }
-        //no sound with _name
+        //no sound with name
         Debug.LogWarning($"AudioManager: Sound not found in list: {name}");
     }
 
@@ -77,6 +100,8 @@ public class AudioManager : Singleton<AudioManager>
                 return;
             }
         }
+        //no sound with name
+        Debug.LogWarning($"AudioManager: Sound not found in list: {name}");
     }
 
     public void StopAllSounds()

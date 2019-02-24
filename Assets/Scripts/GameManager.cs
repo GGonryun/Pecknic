@@ -142,7 +142,7 @@ public class GameManager : Singleton<GameManager>
             Vector3 randomLocation = new Vector3(x, y, z);
             player.Spawn(randomLocation);
 
-            AudioManager.Current.PlaySound("music");
+            AudioManager.Current.LoopSound("music");
         }
         else
         {
