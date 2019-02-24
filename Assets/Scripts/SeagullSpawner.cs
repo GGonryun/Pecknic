@@ -12,6 +12,7 @@ public class SeagullSpawner : Spawner<Seagull>
 
     public void Initialize(VectorRange movementSpeedRange, VectorRange feedingSpeedRange)
     {
+        factory.Initialize();
         this.movementSpeedRange = movementSpeedRange;
         this.feedngSpeedRange = feedingSpeedRange;
         ready = true;

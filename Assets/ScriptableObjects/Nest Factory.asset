@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 962bf233964037245859b1352c5ab061, type: 3}
-  m_Name: Environment Factory
+  m_Script: {fileID: 11500000, guid: 02d26f3ce936ebc4d8093c4d37104aa8, type: 3}
+  m_Name: Nest Factory
   m_EditorClassIdentifier: 
-  templates:
-  - {fileID: 979694689252511551, guid: 07e7e4c1c2afa4e49af7b7f1712ffbed, type: 3}
-  - {fileID: 4640637401430375690, guid: 9d43f19a93abc2848b0cd1a47dd80816, type: 3}
+  template: {fileID: 6372731219911637828, guid: d052e2311da33a8459942f9de5d3ff74,
+    type: 3}

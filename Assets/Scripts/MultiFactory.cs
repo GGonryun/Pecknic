@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MultiFactory<T> : Factory<T> where T : MonoBehaviour
+public class MultiFactory<T> : ScriptableObject where T : MonoBehaviour
 {
     public T[] templates;
-    protected new List<T> objectPool;
+    private List<T> objectPool;
 
-    public override T Get()
+    public virtual void Initialize()
     {
+        objectPool = new List<T>();
+    }
 
-        if (objectPool == null)
-        {
-            objectPool = new List<T>();
-        }
+    public virtual T Get()
+    {
 
         if (objectPool.Count > 0)
         {
@@ -36,12 +36,12 @@ public class MultiFactory<T> : Factory<T> where T : MonoBehaviour
 
     private T CreateRandom()
     {
-        int objIndex = Random.Range(0, templates[].Length);
+        int objIndex = Random.Range(0, templates.Length);
         T newObj = Instantiate(templates[objIndex]);
         return newObj;
     }
 
-    public override void Recycle(T obj)
+    public virtual void Recycle(T obj)
     {
         objectPool.Add(obj);
         obj.gameObject.SetActive(false);

@@ -11,6 +11,7 @@ public class BreadSpawner : Spawner<Bread>
 
     public void Initialize(VectorRange mapSize, float mapScale)
     {
+        factory.Initialize();
         this.mapSize = mapSize;
         this.mapScale = mapScale;
     }

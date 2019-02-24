@@ -7,14 +7,13 @@ public abstract class Factory<T> : ScriptableObject where T : MonoBehaviour
     public T template;
     protected Stack<T> objectPool;
 
+    public virtual void Initialize()
+    {
+        objectPool = new Stack<T>();
+    }
 
     public virtual T Get()
     {
-
-        if (objectPool == null)
-        {
-            objectPool = new Stack<T>();
-        }
 
         if (objectPool.Count > 0)
         {
